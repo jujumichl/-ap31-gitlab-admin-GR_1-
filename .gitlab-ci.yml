@@ -1,0 +1,14 @@
+pages:
+  stage: deploy
+  tags :
+    - doc
+  only:
+    - main
+  script:
+    - mv www public
+    - pip install -r requirements.txt
+    - mkdir public/docs
+    - mkdocs build --site-dir public/docs
+  artifacts:
+    paths:
+      - public

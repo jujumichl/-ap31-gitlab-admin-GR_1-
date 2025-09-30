@@ -1,0 +1,110 @@
+/* --------------------------- */
+/* fichier css de la doc vhb   */
+/* --------------------------- */
+
+/* rend les variables plus lisibles dans les blocs de code */
+:root > * {
+  --md-code-hl-variable-color:rgb(171, 161, 26);
+}
+/* ----------------------- */
+
+
+/* Les titres de niveau plus que 3 ne prennent qu'une ligne */
+.md-sidebar--primary nav nav a.md-nav__link{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+/* ----------------------- */
+
+
+/* Gestion des grilles flex */
+.flex{
+  display: flex;
+  flex-wrap: nonwrap;
+}
+
+
+.flex > * {
+  margin: .1rem!important;
+}
+
+.flex.equal > div{
+  flex: 1 1 0;
+}
+
+.highlight.inline *, .flex >.highlight>pre {
+  margin-top: 0!important;
+}
+/* ----------------------- */
+
+
+/* admonition sans icone */
+.no-icon > .admonition-title::before{
+  width: 0 !important;
+}
+.no-icon > .admonition-title{
+  padding-left: .6rem!important;
+}
+.no-icon > summary::before{
+  width: 0 !important;
+}
+.no-icon > summary{
+  padding-left: .6rem!important;
+}
+/* ----------------------- */
+
+
+/* clearfix for floats */
+.clearfix::after {
+    display: block;
+    clear: both;
+    content: "";
+  }
+/* ----------------------- */
+
+
+
+.w-auto{
+  width: auto !important;
+}
+
+
+/* correction admonition */
+:root {
+  --md-admonition-icon--correction: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>')
+}
+.md-typeset .admonition.correction,
+.md-typeset details.correction {
+  border-color: rgb(255,249,196);
+}
+.md-typeset .correction > .admonition-title,
+.md-typeset .correction > summary {
+  background-color: rgba(255,249,196, 0.1);
+}
+.md-typeset .correction > .admonition-title::before,
+.md-typeset .correction > summary::before {
+  background-color: rgb(255,249,196);
+  -webkit-mask-image: var(--md-admonition-icon--correction);
+          mask-image: var(--md-admonition-icon--correction);
+}
+/* ----------------------- */
+
+/* Clément trouve que le texte des admonition doit avoir la même taille que le reste */
+.admonition, details{
+  font-size: .8rem!important;
+}
+/* ----------------------- */
+
+a abbr, .tabbed-labels abbr {
+  cursor: pointer !important;
+}
+
+.hidden {
+  display: none!important;
+}
+
+.admonition-title > a.inline.end{
+  margin-bottom: 0;
+}

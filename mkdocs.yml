@@ -1,0 +1,101 @@
+site_name: Projet AP31-Gitlab-Admin 
+
+# Ajouter des fichiers ici pour qu'ils apparaissent dans la table des matières
+nav:
+  - index.md
+  - cdc.md
+  - vm-gitlab-config.md
+  - js-guidelines.md
+
+theme:
+  name: material
+  language: fr
+  logo: assets/img/logo.png
+  favicon: assets/img/logo.png
+  palette: 
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7 
+        name: Passer au thème sombre
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Passer au thème clair
+
+  # Option du thème
+  #https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/
+  features:
+    - content.code.copy
+    - content.tooltips
+    - navigation.instant
+    # Ajout d'un fichier index aux sections
+    # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#section-index-pages
+    - navigation.indexes
+    # Integration de la table des matières dans le menu gauche
+    # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#navigation-integration
+    - toc.integrate
+    - toc.follow
+    
+
+markdown_extensions:
+  - attr_list
+  - pymdownx.highlight:
+      use_pygments: true
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+      extend_pygments_lang:
+          - name: php
+            lang: php
+            options:
+                startinline: true
+  - pymdownx.superfences
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      auto_append:
+        - docs/assets/abreviations.md
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.arithmatex:
+      generic: true
+  - abbr
+  - admonition
+  - tables
+  - md_in_html
+  - toc:       
+      toc_depth: '2-3'
+      # Activer si vous souhaitez un lien à côté des titres
+      #permalink: '#'
+  - customblocks:
+      generators:
+        enonce: generators:enonce
+        correction: generators:correction
+  
+
+plugins:
+  - search
+  - include-markdown
+  - glightbox
+  # Génère une table des matières dans le fichier index.md automatiquement
+  # Désactiver ce plugin empèche le chargement de generators!!!???
+  - toc-md:
+      toc_page_title: Table des matières
+      header_level: 1
+      output_path: toc.md
+
+extra_css:
+  - assets/css/vhb.css
+  - assets/css/project.css
+extra_javascript:
+# Permet de taper des mathématiques (Latex)
+  - assets/js/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
