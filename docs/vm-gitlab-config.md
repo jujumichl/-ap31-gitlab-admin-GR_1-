@@ -21,7 +21,7 @@ Procédure à suivre, détail dans la fiche technique sous OneDrive :
 - Demander à accéder au vcenter en saisissant l'URL [https://352009u-srv-vct.352009u.local](https://352009u-srv-vct.352009u.local)
 - Se connecter sous vcenter en renseignant votre login et mot de passe du domaine local
 - Ouvrir l'inventaire et se déplacer dans `CD1 / VM-ELEVES / Modeles`
-- Créer une VM ayant pour nom `VotreNom_Gitlab16` à partir du modèle `Modele_us22_init_ssh`
+- Créer une VM ayant pour nom `VotreNom_Gitlab18` à partir du modèle `Modele_us24_init_ssh`
 - Choisir l’emplacement `VM_ELEVES/SIO2_2526/SLAM` pour le stockage de la nouvelle VM
 - Vérifier que les caractéristiques de la VM soient bien celles-ci : 
   ![vsphere-vm-caracts](./assets/img/vsphere-vm-caracts.png)
@@ -42,6 +42,9 @@ Les VMS Linux sous VMWare affectent le nom `ens160` et non `enp0s3` à la carte 
 Passer la configuration réseau IP de votre serveur Gitlab en mode statique sur l'adresse IP 100.115.29.x / 23, x étant le numéro de la 1ère adresse IP du groupe de 5 adresses IP qui vous a été attribué. Les groupes sont notés dans le fichier `IPfixe_2025_SIO.xls` sous Triskell.
 
 Vérifier la communication réseau IP entre la machine hôte et le serveur Gitlab et ceci dans les 2 sens. 
+
+L'installation de gitlab et la restauration d'un fichier backup pourront être poursuivies en ouvrant une session ssh sous l'outil `Mobaxterm`. Cet outil gère mieux les copier / coller et permet d'enregistrer tout l'historique des commandes passées et résultats obtenus.
+
 ### Installer gitlab community edition
 Demander à mettre à jour les paquets.
 Demander à voir la version courante du paquet gitlab-ce.
@@ -58,9 +61,9 @@ Demander à voir la liste des versions du package `gitlab-ce` :
 apt list --all-versions gitlab-ce
 ```
 
-Demander à installer la version 18.2.8 :
+Demander à installer la version 18.4.1 :
 ```bash
-apt install gitlab-ce=18.2.8-ce.0
+apt install gitlab-ce=18.4.1-ce.0
 ```
 
 Valider le redémarrage des services en laissant la sélection des services par défaut.
@@ -90,7 +93,7 @@ Vous disposez d'un jeu d'essai comprenant :
 - 3 groupes
 - 2 à 3 projets par utilisateur, 1 projet par groupe
 
-Ce jeu d'essai se matérialise par un fichier de sauvegarde .tar : [ap31_2025_09_26_8.2.8_gitlab_backup.tar](../data) et un fichier [gitlab-secrets.json](../data/gitlab-secrets.json).
+Ce jeu d'essai se matérialise par un fichier de sauvegarde .tar : [ap31_2025_18.4.1_gitlab_backup.tar](../data) et un fichier [gitlab-secrets.json](../data/gitlab-secrets.json).
 
 Cette sauvegarde a été réalisée sur un serveur gitlab de même version que celle de votre VM serveur, condition nécessaire pour que la restauration puisse être faite.
 Voici la procédure à suivre pour la restauration de ce jeu d'essai : 
@@ -99,7 +102,7 @@ Voici la procédure à suivre pour la restauration de ce jeu d'essai :
 2. Via la console serveur, copier le fichier de sauvegarde .tar sous `/var/opt/gitlab/backups`, répertoire où gitlab stocke ses fichiers de sauvegarde.
 4. Faire en sorte que le fichier de sauvegarde appartienne bien au compte Linux `git:git`
 ```bash
-sudo chown git:git /var/opt/gitlab/backups/ap31_2025_09_27_18.4.1_gitlab_backup.tar
+sudo chown git:git /var/opt/gitlab/backups/ap31_2025_18.4.1_gitlab_backup.tar
 ```
 3. Via la console serveur, copier le fichier `gitlab-secrets.json` sous `/etc/gitlab`, répertoire où gitlab stocke ses fichiers de configuration.
 5. Vérifier que le fichier `/etc/gitlab/gitlab-secrets.json` appartienne bien au compte `root:root` avec seulement les droits d'accès en lecture / écriture pour le compte root uniquement.
@@ -114,7 +117,7 @@ sudo gitlab-ctl status
 ```
 7. Demander à restaurer la base de données en spécifiant le fichier visé sans le suffixe `_gitlab_backup.tar` :
 ```bash
-sudo gitlab-backup restore BACKUP=ap31_2025_09_27_18.4.1
+sudo gitlab-backup restore BACKUP=ap31_2025_18.4.1
 ```
 8. puis demander à reconfigurer, relancer et vérifier gitlab par les commandes suivantes :
 ```bash
