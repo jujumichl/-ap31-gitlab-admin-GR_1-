@@ -1,0 +1,638 @@
+{
+  "version": 6,
+  "entities": [
+    {
+      "entity": {
+        "type": "Project",
+        "id": "b7aea134-9eb4-4898-9e14-f17a08d5cb31",
+        "name": "API-Gitlab"
+      },
+      "children": [
+        {
+          "entity": {
+            "type": "Scenario",
+            "id": "ec5752d4-82b4-43b1-b31c-be0121d77ce8",
+            "name": "Scenario 1"
+          },
+          "children": [
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${protocol}"
+                  },
+                  "host": "${host}",
+                  "path": "/api/${version}/projects"
+                },
+                "id": "65fe4cc5-dbfd-4720-b13b-6ae52853a2d4",
+                "name": "GET PROJECTS",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "/^2[0-9]{2}$/"
+                  },
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "10"
+                  },
+                  {
+                    "comparison": "LengthEqual",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.",
+                    "value": "10"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "scheme": {
+                    "name": "${protocol}"
+                  },
+                  "host": "${host}",
+                  "path": "/api/${version}/projects"
+                },
+                "id": "ee84a090-e4fe-4e7f-bbf1-ab08464272da",
+                "name": "GET PROJECTS with TOKKEN",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "PRIVATE-TOKEN",
+                    "value": "${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "/^2[0-9]{2}$/"
+                  },
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "10"
+                  },
+                  {
+                    "comparison": "LengthEqual",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.",
+                    "value": "20"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${protocol}"
+                  },
+                  "host": "${host}",
+                  "path": "/api/${version}/projects/${idProject}/wikis"
+                },
+                "id": "59467478-225a-4fc6-b667-cbd2489a2a47",
+                "name": "Copy of GET PROJECTS with TOKKEN & show WIKI",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "PRIVATE-TOKEN",
+                    "value": "${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "/^2[0-9]{2}$/"
+                  },
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "10"
+                  },
+                  {
+                    "comparison": "LengthEqual",
+                    "subject": "ResponseJsonBody",
+                    "enabled": false,
+                    "path": "$.",
+                    "value": "20"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "entity": {
+        "type": "Project",
+        "id": "66afacb0-6238-472a-9186-4cc15b71f97b",
+        "name": "Gitlab"
+      },
+      "children": [
+        {
+          "entity": {
+            "type": "Service",
+            "id": "45a648c8-b70f-41af-808b-a423025f6abf",
+            "name": "GET request"
+          },
+          "children": [
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${protocol}"
+                  },
+                  "host": "${host}",
+                  "path": "/api/${version}/users"
+                },
+                "id": "3fb9c183-2ef8-45ee-b5cf-5a79724f732e",
+                "name": "List of Users",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "PRIVATE-TOKEN",
+                    "value": "${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "/^2[0-9]{2}$/"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${protocol}"
+                  },
+                  "host": "${host}",
+                  "path": "/api/${version}/users/11/memberships"
+                },
+                "id": "9a682d35-67d2-485f-835f-6c0668caae58",
+                "name": "List projects and groups that a user is a member of",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "PRIVATE-TOKEN",
+                    "value": "${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "/^2[0-9]{2}$/"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "entity": {
+            "type": "Service",
+            "id": "3ab44de5-2483-4d77-865e-e224e670bff1",
+            "name": "POST request"
+          },
+          "children": [
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${protocol}"
+                  },
+                  "host": "${host}",
+                  "path": "/api/${version}/users/11/activate"
+                },
+                "id": "d4a75972-05e6-4619-b08d-0ef324ceab78",
+                "name": "user status activate",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "PRIVATE-TOKEN",
+                    "value": "${token}"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "/^2[0-9]{2}$/"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${protocol}"
+                  },
+                  "host": "${host}",
+                  "path": "/api/${version}/users/11/deactivate"
+                },
+                "id": "a7417f30-247a-4f17-8721-9004987607d7",
+                "name": "user status deactivate",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "PRIVATE-TOKEN",
+                    "value": "${token}"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "/^2[0-9]{2}$/"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "200"
+                  },
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "entity": {
+            "type": "Service",
+            "id": "32510260-5793-4bc7-8a79-e1c976b987bc",
+            "name": "PUT request"
+          },
+          "children": [
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+                  "name": "PUT"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"projects_limit\": 10\n}"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${protocol}"
+                  },
+                  "host": "${host}",
+                  "path": "/api/${version}/users/11"
+                },
+                "id": "158e6b64-424f-4702-8d3d-7af01fc0729a",
+                "name": "Modify a user",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "PRIVATE-TOKEN",
+                    "value": "${token}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "environments": [
+    {
+      "id": "661fa62e-af16-43ea-ada6-635a23caccba",
+      "name": "dev",
+      "variables": {
+        "a992827d-fc17-4094-ac53-0131045a7f77": {
+          "createdAt": "2025-10-07T17:10:55.649+02:00",
+          "name": "protocol",
+          "value": "https",
+          "enabled": true,
+          "private": false
+        },
+        "b5c4257d-b1d5-4ec9-8377-97eafd664bfd": {
+          "createdAt": "2025-10-07T17:10:55.649+02:00",
+          "name": "version",
+          "value": "v4",
+          "enabled": true,
+          "private": false
+        },
+        "f5f19148-7b46-4d75-8754-79715d789066": {
+          "createdAt": "2025-10-07T17:10:55.649+02:00",
+          "name": "host",
+          "value": "gitlab.siovhb.lycee-basch.fr",
+          "enabled": true,
+          "private": false
+        },
+        "a8dd2c68-a8c6-437e-bd3c-c88c8ac9d135": {
+          "createdAt": "2025-10-07T17:10:55.649+02:00",
+          "name": "idProject",
+          "value": "348",
+          "enabled": true,
+          "private": false
+        },
+        "dedee2c5-f94a-4d50-a7ec-06f65e0ee06b": {
+          "createdAt": "2025-10-07T17:10:55.649+02:00",
+          "name": "token",
+          "value": "glpat-y2xGT9lknWfkIm_snuIHzm86MQp1OjZ6CA.01.0y0ch7vp7",
+          "enabled": true,
+          "private": false
+        }
+      }
+    },
+    {
+      "id": "a85ec28d-a6ee-4db6-a164-98eaba5b322d",
+      "name": "LinuxLocal",
+      "variables": {
+        "bdd75f38-8664-4ecf-ba81-5cac4f7aea22": {
+          "createdAt": "2025-10-07T17:10:55.649+02:00",
+          "name": "protocol",
+          "value": "http",
+          "enabled": true,
+          "private": false
+        },
+        "0b3c4fb6-7bb1-4542-a9fc-3778422cdf7d": {
+          "createdAt": "2025-10-07T17:10:55.649+02:00",
+          "name": "version",
+          "value": "v4",
+          "enabled": true,
+          "private": false
+        },
+        "6aa7c43d-9419-4c68-81ac-a4c1a20c3d74": {
+          "createdAt": "2025-10-07T17:10:55.649+02:00",
+          "name": "host",
+          "value": "100.115.29.136",
+          "enabled": true,
+          "private": false
+        },
+        "48493bf9-dda3-4751-9a05-630b4b0a125d": {
+          "createdAt": "2025-10-07T17:10:55.649+02:00",
+          "name": "idProject",
+          "value": "348",
+          "enabled": false,
+          "private": false
+        },
+        "fb70c52b-f261-4494-839a-7c0844424808": {
+          "createdAt": "2025-10-07T17:10:55.649+02:00",
+          "name": "token",
+          "value": "glpat-tyg0RGDaM8Msqb2SLQzZ0W86MQp1OjEH.01.0w0us167f",
+          "enabled": true,
+          "private": false
+        }
+      }
+    }
+  ]
+}
