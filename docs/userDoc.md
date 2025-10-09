@@ -1,4 +1,5 @@
 # User accounts
+## CF
 Liens pour la documentation API des utilisateurs :  
 https://docs.gitlab.com/18.4/api/users/
 
@@ -39,8 +40,8 @@ Pour activer les utilisateurs:  `/users/:id/activate`
 Pour désactiver les utilisateurs: `/users/:id/deactivate`
 
 ## Requête PUT
-### Changer le nombre de la limite des utilisateur
-Pour augmenter la limite du nombre de rpojet pouvant être créer par une personne : 
+### Changer le nombre de la limite des utilisateurs
+Pour augmenter la limite du nombre de projet pouvant être créer par une personne : 
 `/users/:id`  
 Ensuite mettre dans le body de la requête mettre ce json:  
 ```json
