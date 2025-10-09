@@ -2,6 +2,8 @@
 Liens pour la documentation API des utilisateurs :  
 https://docs.gitlab.com/18.4/api/users/
 
+Ficher JSON à importer dans Talend : 
+[UserGitlab.json](./JSON_Talend/UserGitlab.json)
 ## Requête GET
 ### Liste des utilisateurs
 Il suffit d'ajouter ce préfixe a la fin de l'URL :  `/users`
