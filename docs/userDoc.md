@@ -24,10 +24,12 @@ Pour désactiver les utilisateurs: `/users/:id/deactivate`
 ## Requête PUT
 ### Changer le nombre de la limite des utilisateur
 Pour augmenter la limite du nombre de rpojet pouvant être créer par une personne : 
-`/users/:id/projects_limit`
-
-regarder la pagination
-
-https://docs.gitlab.com/18.4/api/users/#get-the-status-of-a-user
+`/users/:id`  
+Ensuite mettre dans le body de la requête mettre ce json:  
+```json
+{
+    "projects_limit": int //Remplacer le int par le nombre de projets que l'on souhaite associé 
+}
+```
 
 
