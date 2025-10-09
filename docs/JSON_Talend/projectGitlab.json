@@ -1,0 +1,598 @@
+{
+  "version": 6,
+  "entities": [
+    {
+      "entity": {
+        "type": "Project",
+        "description": "",
+        "id": "f35789b1-7869-483d-9ca4-a6ff5f0d9b0c",
+        "name": "API-Gitlab"
+      },
+      "children": [
+        {
+          "entity": {
+            "type": "Service",
+            "id": "9f3b15ba-75ad-484e-b748-3f6f43f07914",
+            "name": "GET request"
+          },
+          "children": [
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${protocol}"
+                  },
+                  "host": "${host}",
+                  "path": "/api/${version}/projects"
+                },
+                "id": "1f26c1ea-1319-430c-b150-738dc1a914c6",
+                "name": "ALL PROJECTS",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "/^2[0-9]{2}$/"
+                  },
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "10"
+                  },
+                  {
+                    "comparison": "LengthEqual",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.",
+                    "value": "10"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": [
+                      {
+                        "enabled": true,
+                        "name": "per_page",
+                        "value": "100"
+                      }
+                    ]
+                  },
+                  "scheme": {
+                    "name": "${protocol}"
+                  },
+                  "host": "${host}",
+                  "path": "/api/${version}/projects"
+                },
+                "id": "07262643-0953-4452-b561-fa35ce707d52",
+                "name": "ALL PROJECTS with TOKKEN",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "PRIVATE-TOKEN",
+                    "value": "${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "/^2[0-9]{2}$/"
+                  },
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "10"
+                  },
+                  {
+                    "comparison": "LengthEqual",
+                    "subject": "ResponseJsonBody",
+                    "path": "$.",
+                    "value": "49"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${protocol}"
+                  },
+                  "host": "${host}",
+                  "path": "/api/${version}/projects/${idProject}/wikis"
+                },
+                "id": "07032f24-d001-42c4-98e8-4cf13b4c7738",
+                "name": "ALL WIKI of one project with TOKKEN",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "PRIVATE-TOKEN",
+                    "value": "${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "/^2[0-9]{2}$/"
+                  },
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "10"
+                  },
+                  {
+                    "comparison": "LengthEqual",
+                    "subject": "ResponseJsonBody",
+                    "enabled": false,
+                    "path": "$.",
+                    "value": "20"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                  "name": "GET"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": []
+                  },
+                  "scheme": {
+                    "name": "${protocol}"
+                  },
+                  "host": "${host}",
+                  "path": "/api/${version}/projects/${idProject}/wikis/${slug}"
+                },
+                "id": "25be3f74-33a4-4b1e-94ef-6be6dc98987b",
+                "name": "WIKI of one project with TOKKEN",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "PRIVATE-TOKEN",
+                    "value": "${token}"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "/^2[0-9]{2}$/"
+                  },
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "10"
+                  },
+                  {
+                    "comparison": "LengthEqual",
+                    "subject": "ResponseJsonBody",
+                    "enabled": false,
+                    "path": "$.",
+                    "value": "20"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "entity": {
+            "type": "Service",
+            "id": "f87a69da-1ead-4cff-bb58-70609e5ab391",
+            "name": "POST request"
+          },
+          "children": [
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                  "name": "POST"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text"
+                },
+                "uri": {
+                  "query": {
+                    "delimiter": "&",
+                    "items": [
+                      {
+                        "enabled": true,
+                        "name": "title",
+                        "value": "home1"
+                      },
+                      {
+                        "enabled": true,
+                        "name": "content",
+                        "value": "voici un wiki numéros 2"
+                      }
+                    ]
+                  },
+                  "scheme": {
+                    "name": "${protocol}"
+                  },
+                  "host": "${host}",
+                  "path": "/api/${version}/projects/${idProject}/wikis"
+                },
+                "id": "b3f675f6-38a6-4cb9-909c-115dae034532",
+                "name": "create wiki for one project with TOKKEN",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "PRIVATE-TOKEN",
+                    "value": "${token}"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "/^2[0-9]{2}$/"
+                  },
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "10"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "entity": {
+            "type": "Service",
+            "id": "02856933-4f81-4089-beb6-c6717de52b0d",
+            "name": "PUT request"
+          },
+          "children": [
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+                  "name": "PUT"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"wiki_access_level\": \"disabled\"\n}"
+                },
+                "uri": {
+                  "scheme": {
+                    "name": "${protocol}"
+                  },
+                  "host": "${host}",
+                  "path": "/api/${version}/projects/${idProject}"
+                },
+                "id": "91a54f7c-4585-4be2-a3cb-d13543966951",
+                "name": "Disable WIKI of one project with TOKKEN",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "PRIVATE-TOKEN",
+                    "value": "${token}"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "/^2[0-9]{2}$/"
+                  },
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "10"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+                  "name": "PUT"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": []
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"wiki_access_level\": \"private\"\n}"
+                },
+                "uri": {
+                  "scheme": {
+                    "name": "${protocol}"
+                  },
+                  "host": "${host}",
+                  "path": "/api/${version}/projects/${idProject}"
+                },
+                "id": "10764f3c-670c-426b-af24-f3289ff58f18",
+                "name": "Private WIKI of one project with TOKKEN",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "PRIVATE-TOKEN",
+                    "value": "${token}"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "/^2[0-9]{2}$/"
+                  },
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "10"
+                  }
+                ]
+              }
+            },
+            {
+              "entity": {
+                "type": "Request",
+                "method": {
+                  "requestBody": true,
+                  "link": "http://tools.ietf.org/html/rfc7231#section-4.3.4",
+                  "name": "PUT"
+                },
+                "body": {
+                  "formBody": {
+                    "overrideContentType": true,
+                    "encoding": "application/x-www-form-urlencoded",
+                    "items": [
+                      {
+                        "enabled": true,
+                        "type": "Text",
+                        "name": "wiki_access_level",
+                        "value": "enabled"
+                      }
+                    ]
+                  },
+                  "bodyType": "Text",
+                  "textBody": "{\n  \"wiki_access_level\": \"enabled\"\n}"
+                },
+                "uri": {
+                  "scheme": {
+                    "name": "${protocol}"
+                  },
+                  "host": "${host}",
+                  "path": "/api/${version}/projects/${idProject}"
+                },
+                "id": "f3bee8ec-62b6-423f-a114-a29afbabc173",
+                "name": "enable WIKI of one project with TOKKEN",
+                "headers": [
+                  {
+                    "enabled": true,
+                    "name": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "PRIVATE-TOKEN",
+                    "value": "${token}"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "assertions": [
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseStatus",
+                    "path": "code",
+                    "value": "/^2[0-9]{2}$/"
+                  },
+                  {
+                    "comparison": "Matches",
+                    "subject": "ResponseHeader",
+                    "path": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "comparison": "Exists",
+                    "subject": "ResponseBody",
+                    "path": "content",
+                    "value": "10"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

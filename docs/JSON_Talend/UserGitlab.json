@@ -5,7 +5,7 @@
       "entity": {
         "type": "Project",
         "id": "66afacb0-6238-472a-9186-4cc15b71f97b",
-        "name": "Gitlab"
+        "name": "Gitlab-User"
       },
       "children": [
         {
@@ -308,7 +308,7 @@
                     "items": []
                   },
                   "bodyType": "Text",
-                  "textBody": "{\n  \"projects_limit\": 10\n}"
+                  "textBody": "{\n  \"projects_limit\": 999\n}"
                 },
                 "uri": {
                   "query": {
@@ -328,6 +328,11 @@
                     "enabled": true,
                     "name": "PRIVATE-TOKEN",
                     "value": "${token}"
+                  },
+                  {
+                    "enabled": true,
+                    "name": "Content-Type",
+                    "value": "application/json"
                   }
                 ]
               }
