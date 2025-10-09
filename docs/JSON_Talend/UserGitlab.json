@@ -4,14 +4,14 @@
     {
       "entity": {
         "type": "Project",
-        "id": "66afacb0-6238-472a-9186-4cc15b71f97b",
+        "id": "f6c03f27-d9a5-41c4-86db-dd3267a23b93",
         "name": "Gitlab-User"
       },
       "children": [
         {
           "entity": {
             "type": "Service",
-            "id": "45a648c8-b70f-41af-808b-a423025f6abf",
+            "id": "48a02fda-77f2-4b6e-9d08-0a9b92d459c1",
             "name": "GET request"
           },
           "children": [
@@ -41,7 +41,7 @@
                   "host": "${host}",
                   "path": "/api/${version}/users"
                 },
-                "id": "3fb9c183-2ef8-45ee-b5cf-5a79724f732e",
+                "id": "15684c4e-d5b0-4f76-91bb-78c7d59202f6",
                 "name": "List of Users",
                 "headers": [
                   {
@@ -103,7 +103,7 @@
                   "host": "${host}",
                   "path": "/api/${version}/users/11/memberships"
                 },
-                "id": "9a682d35-67d2-485f-835f-6c0668caae58",
+                "id": "8b5d2dbf-5190-4da9-824e-4709e1b08460",
                 "name": "List projects and groups that a user is a member of",
                 "headers": [
                   {
@@ -144,7 +144,8 @@
         {
           "entity": {
             "type": "Service",
-            "id": "3ab44de5-2483-4d77-865e-e224e670bff1",
+            "description": "",
+            "id": "13f70264-0f21-452f-becb-c8b04f92a7e2",
             "name": "POST request"
           },
           "children": [
@@ -175,7 +176,7 @@
                   "host": "${host}",
                   "path": "/api/${version}/users/11/activate"
                 },
-                "id": "d4a75972-05e6-4619-b08d-0ef324ceab78",
+                "id": "726535ed-ae89-4c43-8269-23bc64923cd8",
                 "name": "user status activate",
                 "headers": [
                   {
@@ -243,7 +244,7 @@
                   "host": "${host}",
                   "path": "/api/${version}/users/11/deactivate"
                 },
-                "id": "a7417f30-247a-4f17-8721-9004987607d7",
+                "id": "c019626a-ec93-4601-a3fa-0d02093f6787",
                 "name": "user status deactivate",
                 "headers": [
                   {
@@ -289,7 +290,7 @@
         {
           "entity": {
             "type": "Service",
-            "id": "32510260-5793-4bc7-8a79-e1c976b987bc",
+            "id": "2c2651a5-aeab-42db-9569-b5431b92944c",
             "name": "PUT request"
           },
           "children": [
@@ -321,7 +322,7 @@
                   "host": "${host}",
                   "path": "/api/${version}/users/11"
                 },
-                "id": "158e6b64-424f-4702-8d3d-7af01fc0729a",
+                "id": "2c7f2d11-df8f-4cd0-b663-a7ead83c7ec1",
                 "name": "Modify a user",
                 "headers": [
                   {
