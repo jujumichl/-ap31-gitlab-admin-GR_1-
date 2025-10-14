@@ -12,6 +12,8 @@ function initApp() {
     btnSupprimer.addEventListener('click', demandeConfirmation);
     let btnCharger = document.getElementById("btnGetProjects");
     btnCharger.addEventListener('click', getProjects);
+    let btnFiltrer = document.getElementById("btnFiltrer");
+    btnFiltrer.addEventListener('change', filtrer);
 
 }
 
@@ -142,8 +144,8 @@ function createTableRow(oneProject) {
  * Retrouve tous les projets
  * @returns retourne une liste de projet
  */
-async function retrieveProjects (baseUrl) {
-    const finalUrl = baseUrl + "/projects";
+async function retrieveProjects (baseUrl, filtre) {
+    const finalUrl = baseUrl + "/projects?order_by=" + filtre + "&sort=desc";
     // ajout du ou des champs d'entête dans la collection de type Headers
     let myHeaders = new Headers();
     myHeaders.append("Accept", "application/json");
@@ -172,6 +174,20 @@ async function retrieveProjects (baseUrl) {
     return resultArray;
 }
 
+
+function filtrer(){
+    if (this.value == "crea"){
+        getProjects();
+    }
+    else if (this.value == "Id"){
+        getProjects("id");
+    }
+    else {
+        getProjects("name");
+
+    }
+}
+
 /**
  * Construit les lignes du corps du tableau HTML htmlTable 
  * à partir du tableau des projets projectsArray 
@@ -189,10 +205,11 @@ function buildTableRows(projectsArray, htmlTable){
     }
 }
 
-async function getProjects(){
+async function getProjects(evt, filtre = "created_at"){
     const htmlTable = document.getElementById("tabProjects");
     eraseHTMLTab(htmlTable);
-    buildTableRows( await retrieveProjects(getAPIBaseURL()), htmlTable);
+    console.log(filtre);
+    buildTableRows( await retrieveProjects(getAPIBaseURL(), filtre), htmlTable);
 }
 
 
