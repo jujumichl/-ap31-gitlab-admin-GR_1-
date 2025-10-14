@@ -4,10 +4,10 @@ window.addEventListener("load", initApp);
 */
 function initApp() {
     const slider = document.getElementById("slider");
-    slider.addEventListener("change", getValue);
+    slider.addEventListener('change', getValue);
     slider.value = 20;
     let buttonAllChk = document.getElementById("btnCocher");
-    buttonAllChk.addEventListener('click', check);
+    buttonAllChk.addEventListener('change', check);
     let btnSupprimer = document.getElementById("btnDeleteProjects");
     btnSupprimer.addEventListener('click', demandeConfirmation);
     let btnCharger = document.getElementById("btnGetProjects");
@@ -25,8 +25,8 @@ function getValue(){
  * @param {*} evt 
  */
 function check(evt) {
-    let inputs = document.querySelectorAll("table#tabProjects input[type=checkbox]");
-    if (evt.currentTarget.id == "btnToutCocher") {
+    let inputs = document.querySelectorAll("table#tabProjects tbody#bodyProjects input[type=checkbox]");
+    if (evt.currentTarget.checked) {
         for (let i = 0; i < inputs.length; i++) {
             if (!inputs[i].checked) {
                 inputs[i].checked = true;
