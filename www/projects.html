@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico">
     <title>VHBSIO - Panneau d'administration de gitlab</title>.
-    <script src="./js/C_project.js"></script>
+    <script src="./js/C_project.js" defer></script>
+    <script src="js/api.js" defer></script>
+    <script src="js/.config.js" defer></script>
 </head>
 
 <body>
@@ -53,27 +55,45 @@
                         <a href="param.html" class="nav-link" title="Paramétrer l'accès à la plateforme">
                             <span class="bi bi-gear"></span> Paramètres
                         </a>
-                        </li>           
-                    </ul>
-                </nav>    
-            </header>
-            <!-- Division principale -->
-            <main id="contenu" class="container">
-                <h2 class="mb-3">
-                    Gestion <em>par lots</em> des projets de la plateforme Gitlab
-                </h2>
-                <form id="frmProjects" class="row row-cols-auto g-3 mb-3" action="#">
-                    <fieldset class="col">
-                        <input type="button" class="btn btn-primary" value="Charger projets" id="btnGetProjects">
-                    </fieldset>
-                </form>
-                <div id="info" class="bg-info">Utilisateurs chargés</div>
-                <table class="table table-striped" id="tabProjects">
-                    <caption>Liste des projets</caption>
-                    <thead>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <!-- Division principale -->
+        <main id="contenu" class="container">
+            <h2 class="mb-3">
+                Gestion <em>par lots</em> des projets de la plateforme Gitlab
+            </h2>
+            <form id="frmProjects" class="row row-cols-auto g-3 mb-3" action="#">
+                <fieldset class="col me-auto">
+                    <input type="button" class="btn btn-primary" value="Charger projets" id="btnGetProjects">
+                    <input type="button" class="btn btn-primary" value="Supprimer" id="btnDeleteProjects">
+                    <div class="form-check form-switch">
+                        <label class="form-check-label" for="visibility">Privé/Publique</label>
+                        <input class="form-check-input" type="checkbox" role="switch" id="visibility">
+                    </div>
+                </fieldset>
+                <div class="col order-last">
+                    <div class="form-check form-switch">
+                        <label class="form-check-label" for="btnAscDesc">desc/asc</label>
+                        <input class="form-check-input" type="checkbox" role="switch" id="btnAscDesc">
+                    </div>
+                    <select id="btnFiltrer" class="form-select form-select mb-3 align-items-end" aria-label=".form-select-lg">
+                        <option selected="" hidden>Filtrer</option>
+                        <option value="created_at">Date de création</option>
+                        <option value="id">Identifiant</option>
+                        <option value="name">Nom de projets</option>
+                    </select>
+                </div>
+            </form>
+            <div id="info" class="bg-info text-center">Projets chargés</div>
+            <table class="table table-striped" id="tabProjects">
+                <caption>Liste des projets</caption>
+                <thead>
                     <tr>
-                        <th><input type="checkbox" id="887" class="form-check-input"></th>
+                        <th><input type="checkbox" id="btnCocher" class="form-check-input"></th>
                         <th class="">Id</th>
+                        <th class="">Owner</th>
                         <th class="">Nom</th>
                         <th class="">Date création</th>
                         <th class="">Date de connexion</th>
@@ -84,6 +104,15 @@
                     </tr>
                 </thead>
                 <tbody id="bodyProjects">
+                    <tr>
+                        <td><input type="checkbox" id="887" class="form-check-input"></td>
+                        <td>887</td>
+                        <td>iilieva</td>
+                        <td>Coding Test</td>
+                        <td>2021-04-15T15:44:41.920Z</td>
+                        <td>private</td>
+                        <td>uneurl.html</td>
+                    </tr>
 
                 </tbody>
             </table>
