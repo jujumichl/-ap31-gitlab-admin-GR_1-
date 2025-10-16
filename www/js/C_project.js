@@ -222,12 +222,12 @@ function buildTableRows(projectsArray, htmlTable){
     }
 }
 
-async function getProjects(evt, filtre = "created_at", asc = "desc"){
+async function getProjects(evt, filtre = document.getElementById("btnFiltrer").value, asc = "desc"){
     const htmlTable = document.getElementById("tabProjects");
     eraseHTMLTab(htmlTable);
     console.log(filtre);
-    if (filtre == undefined){
-        filtre = document.getElementById("btnFiltrer").value
+    if (filtre == "Filtrer"){
+        filtre = "created_at";
         buildTableRows( await retrieveProjects(getAPIBaseURL(), filtre, asc), htmlTable);
     }
     else{
