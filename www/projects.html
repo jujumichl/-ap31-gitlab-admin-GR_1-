@@ -38,60 +38,49 @@
                             title="Gérer par lots les projets de la plateforme">
                             <span class="bi bi-kanban"></span> Projets
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="./users.html" class="nav-link"
-                            title="Gérer par lots les utilisateurs de la plateforme">
+                        </li>
+                        <li class="nav-item">              
+                        <a href="./users.html" class="nav-link" title="Gérer par lots les utilisateurs de la plateforme">
                             <span class="bi bi-person"></span> Utilisateurs
                         </a>
-                    </li>
-                    <li class="nav-item">
+                        </li>
+                        <li class="nav-item">
                         <a href="./group.html" class="nav-link" title="Gérer par lots les groupes de la plateforme">
                             <span class="bi bi-people"></span> Groupes
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="./param.html" class="nav-link" title="Paramétrer l'accès à la plateforme">
+                        </li>
+                        <li class="nav-item">
+                        <a href="param.html" class="nav-link" title="Paramétrer l'accès à la plateforme">
                             <span class="bi bi-gear"></span> Paramètres
                         </a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
-        <!-- Division principale -->
-        <main id="contenu" class="container">
-            <h2 class="mb-3">
-                Gestion <em>par lots</em> des projets de la plateforme Gitlab
-            </h2>
-            <form id="frmProjects" class="row row-cols-auto g-3 mb-3" action="#">
-                <fieldset class="col me-auto">
-                    <input type="button" class="btn btn-primary" value="Charger projets" id="btnGetProjects">
-                    <input type="button" class="btn btn-primary" value="Supprimer" id="btnDeleteProjects">
-                    <div class="form-check form-switch">
-                        <label class="form-check-label" for="visibility">Privé/Publique</label>
-                        <input class="form-check-input" type="checkbox" role="switch" id="visibility">
-                    </div>
-                </fieldset>
-                <div class="col order-last">
-                    <select class="form-select form-select mb-3 align-items-end" aria-label=".form-select-lg">
-                        <option selected="" hidden>Filtrer</option>
-                        <option value="crea">Date de création</option>
-                        <option value="Id">Identifiant</option>
-                        <option value="a-z">A-Z</option>
-                    </select>
-                </div>
-            </form>
-            <div id="info" class="bg-info text-center">Projets chargés</div>
-            <table class="table table-striped" id="tabProjects">
-                <caption>Liste des projets</caption>
-                <thead>
+                        </li>           
+                    </ul>
+                </nav>    
+            </header>
+            <!-- Division principale -->
+            <main id="contenu" class="container">
+                <h2 class="mb-3">
+                    Gestion <em>par lots</em> des projets de la plateforme Gitlab
+                </h2>
+                <form id="frmProjects" class="row row-cols-auto g-3 mb-3" action="#">
+                    <fieldset class="col">
+                        <input type="button" class="btn btn-primary" value="Charger projets" id="btnGetProjects">
+                    </fieldset>
+                </form>
+                <div id="info" class="bg-info">Utilisateurs chargés</div>
+                <table class="table table-striped" id="tabProjects">
+                    <caption>Liste des projets</caption>
+                    <thead>
                     <tr>
                         <th><input type="checkbox" id="887" class="form-check-input"></th>
                         <th class="">Id</th>
                         <th class="">Nom</th>
                         <th class="">Date création</th>
-                        <th class="">Niveau de visibilité</th>
-                        <th class="">URL d'accès</th>
+                        <th class="">Date de connexion</th>
+                        <th class="">État</th>
+                        <th class="">Nombre limite de projets</th>
+
+                        <th>&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody id="bodyProjects">
