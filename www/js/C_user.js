@@ -109,11 +109,13 @@ function buildTableRows (usersArray, HTMLTableBody){
         HTMLTableBody.appendChild(myNewRow);
     }
 }
-
+/**
+ * Fonction générale permettant la récupération de tous les users 
+ * en passant par l'API Gitlab
+ */
 async function getUsers() {
     let tableau = document.getElementById("bodyUsers");
-    eraseHTMLTab(tableau);
+    eraseHTMLTab(tableau); // Efface les informations du tableau existant de la page 
     let users = await retrieveUsers();
-    console.log(users);
-    buildTableRows(users, tableau);
+    buildTableRows(users, tableau); 
 }
