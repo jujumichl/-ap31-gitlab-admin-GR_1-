@@ -75,11 +75,15 @@
                     </div>
                 </fieldset>
                 <div class="col order-last">
+                    <div class="form-check form-switch">
+                        <label class="form-check-label" for="btnAscDesc">desc/asc</label>
+                        <input class="form-check-input" type="checkbox" role="switch" id="btnAscDesc">
+                    </div>
                     <select id="btnFiltrer" class="form-select form-select mb-3 align-items-end" aria-label=".form-select-lg">
                         <option selected="" hidden>Filtrer</option>
-                        <option value="crea">Date de création</option>
-                        <option value="Id">Identifiant</option>
-                        <option value="a-z">A-Z</option>
+                        <option value="created_at">Date de création</option>
+                        <option value="id">Identifiant</option>
+                        <option value="name">Nom de projets</option>
                     </select>
                 </div>
             </form>
@@ -90,6 +94,7 @@
                     <tr>
                         <th><input type="checkbox" id="btnCocher" class="form-check-input"></th>
                         <th class="">Id</th>
+                        <th class="">Owner</th>
                         <th class="">Nom</th>
                         <th class="">Date création</th>
                         <th class="">Niveau de visibilité</th>
@@ -100,7 +105,8 @@
                     <tr>
                         <td><input type="checkbox" id="887" class="form-check-input"></td>
                         <td>887</td>
-                        <td>iilieva / Coding Test</td>
+                        <td>iilieva</td>
+                        <td>Coding Test</td>
                         <td>2021-04-15T15:44:41.920Z</td>
                         <td>private</td>
                         <td>uneurl.html</td>

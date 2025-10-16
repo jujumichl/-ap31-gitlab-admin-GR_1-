@@ -6,14 +6,16 @@ function initApp() {
     const slider = document.getElementById("slider");
     slider.addEventListener('change', getValue);
     slider.value = 20;
-    let buttonAllChk = document.getElementById("btnCocher");
+    const buttonAllChk = document.getElementById("btnCocher");
     buttonAllChk.addEventListener('change', check);
-    let btnSupprimer = document.getElementById("btnDeleteProjects");
+    const btnSupprimer = document.getElementById("btnDeleteProjects");
     btnSupprimer.addEventListener('click', demandeConfirmation);
-    let btnCharger = document.getElementById("btnGetProjects");
+    const btnCharger = document.getElementById("btnGetProjects");
     btnCharger.addEventListener('click', getProjects);
-    let btnFiltrer = document.getElementById("btnFiltrer");
+    const btnFiltrer = document.getElementById("btnFiltrer");
     btnFiltrer.addEventListener('change', filtrer);
+    const btnAscDesc = document.getElementById("btnAscDesc");
+    btnAscDesc.addEventListener('change', sort);
 
 }
 
@@ -118,9 +120,13 @@ function createTableRow(oneProject) {
 
     //création d'un td contenant le nom de l'owner du projet et l'ajoute au tableau
     cell = document.createElement("td");
-    cell.textContent = oneProject.name_with_namespace;
+    cell.textContent = oneProject.namespace.name;
     row.appendChild(cell);
 
+    //création d'un td contenant le nom du projet et l'ajoute au tableau
+    cell = document.createElement("td");
+    cell.textContent = oneProject.name;
+    row.appendChild(cell);
     
     //Création d'un td contenant la date de création du projet
     cell = document.createElement("td");
@@ -144,10 +150,13 @@ function createTableRow(oneProject) {
  * Retrouve tous les projets
  * @returns retourne une liste de projet
  */
-async function retrieveProjects (baseUrl, filtre) {
-    const finalUrl = baseUrl + "/projects?order_by=" + filtre + "&sort=desc";
+async function retrieveProjects (baseUrl, filtre, asc) {
+    const finalUrl = baseUrl + "/projects?order_by=" + filtre + "&sort=" + asc;
     // ajout du ou des champs d'entête dans la collection de type Headers
     let myHeaders = new Headers();
+
+    console.log(finalUrl);
+
     myHeaders.append("Accept", "application/json");
     myHeaders.append("PRIVATE-TOKEN", getAccessToken());
     // construction de l'objet settings précisant méthode et champs d'entête
@@ -175,19 +184,27 @@ async function retrieveProjects (baseUrl, filtre) {
 }
 
 
-function filtrer(){
-    if (this.value == "crea"){
-        getProjects();
+async function filtrer(evt){
+    if (this.value == "created_at"){
+        await getProjects(evt);
     }
-    else if (this.value == "Id"){
-        getProjects("id");
+    else if (this.value == "id"){
+        await getProjects(evt, "id");
     }
     else {
-        getProjects("name");
+        await getProjects(evt, "name");
 
     }
 }
 
+async function sort(evt){
+    if (this.checked){
+        await getProjects(evt, undefined, "asc");
+    }
+    else{
+        await getProjects(evt, undefined, "desc");
+    }
+}
 /**
  * Construit les lignes du corps du tableau HTML htmlTable 
  * à partir du tableau des projets projectsArray 
@@ -205,11 +222,17 @@ function buildTableRows(projectsArray, htmlTable){
     }
 }
 
-async function getProjects(evt, filtre = "created_at"){
+async function getProjects(evt, filtre = "created_at", asc = "desc"){
     const htmlTable = document.getElementById("tabProjects");
     eraseHTMLTab(htmlTable);
     console.log(filtre);
-    buildTableRows( await retrieveProjects(getAPIBaseURL(), filtre), htmlTable);
+    if (filtre == undefined){
+        filtre = document.getElementById("btnFiltrer").value
+        buildTableRows( await retrieveProjects(getAPIBaseURL(), filtre, asc), htmlTable);
+    }
+    else{
+        buildTableRows( await retrieveProjects(getAPIBaseURL(), filtre, asc), htmlTable);
+    }
 }
 
 
