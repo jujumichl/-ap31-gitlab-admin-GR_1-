@@ -17,6 +17,10 @@ function initApp() {
     const btnAscDesc = document.getElementById("btnAscDesc");
     btnAscDesc.addEventListener('change', sort);
 
+    /////////////////////////////////////////////////////////////////////////3 écouteurs
+    const btnvisibility = document.getElementById("valider");
+    btnvisibility.addEventListener('click', visibilityAll);
+
 }
 
 function getValue(){
@@ -66,7 +70,7 @@ function ischecked() {
  * @param {Event} evt 
  */
 function demandeConfirmation(evt) {
-    var ok;
+    let ok;
     let all = ischecked();
     let list = "";
     all.forEach((element) => list += element + "\n")
@@ -205,6 +209,60 @@ async function sort(evt){
         await getProjects(evt, undefined, "desc");
     }
 }
+
+/**
+ * Permet de changer la visibilité d'un projet
+ */
+async function visibility(evt, baseUrl, id, value){
+    const finalUrl = baseUrl + "/projects/" + id;
+    let visib;
+    // ajout du ou des champs d'entête dans la collection de type Headers
+    let myHeaders = new Headers();
+
+    console.log(finalUrl);
+
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("PRIVATE-TOKEN", getAccessToken());
+    if (value == "1"){
+        visib = "public";
+    }
+    else if (value == "2"){
+        visib = "internal";
+    }
+    else{
+        visib = "private";
+    }
+    console.log(visib);
+    let data =  {visibility : visib};
+    // construction de l'objet settings précisant méthode et champs d'entête
+    let settings = { method: "PUT", headers: myHeaders, body: JSON.stringify(data)};
+    // envoi asynchrone de la requête http avec GET comme méthode par défaut
+    // avec attente d'obtention du résultat
+    let response = await fetch(finalUrl, settings);
+
+    // récupération du corps de la réponse dans un objet JSON
+    let resultArray = await response.json();
+    let headers = await response.headers;
+    // récupération du code statut de la réponse
+    let statusCode = response.status;
+    console.log(
+        `Code statut : ${statusCode} 
+        Content-Type : ${headers.get("Content-Type")}
+        result : ${JSON.stringify(resultArray)}`
+    );
+    return resultArray;
+}
+
+async function visibilityAll(evt){
+    evt.preventDefault();
+    let all = ischecked();
+    let visib = document.forms[0].elements["visibility"].value;
+    for (element of all){
+        await visibility(evt, getAPIBaseURL(), String(element), String(visib));
+    }
+    getProjects(evt)
+}
+
 /**
  * Construit les lignes du corps du tableau HTML htmlTable 
  * à partir du tableau des projets projectsArray 
