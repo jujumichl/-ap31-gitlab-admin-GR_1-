@@ -8,6 +8,8 @@ function initApp() {
     //slider.value = 20;
     let btnGetUsers = document.getElementById('btnGetUsers');
     btnGetUsers.addEventListener('click', getUsers);
+    let activeDesactive = document.getElementById('activeDesactive');
+    activeDesactive.addEventListener('click', sort)
 }
 
 function getValue(){
@@ -34,7 +36,7 @@ function eraseHTMLTab(tab) {
  */
 async function retrieveUsers() {    
     // construction de l'URL complète
-    const URL = getAPIBaseUrl();
+    const URL = getAPIBaseURL();
     let URLFinal = URL + '/users?order_by=username&sort=asc'
     // envoi asynchrone de la requête http avec GET comme méthode par défaut
     // avec attente d'obtention du résultat
@@ -81,7 +83,11 @@ function createTableRow (oneUsers) {
     row.appendChild(cell); // Ajoute les informations dans la nouvelle ligne du tableau 
 
     cell = document.createElement("td");  // Ajoute un élément dans le tableau
-    cell.textContent = oneUsers.last_sign_in_at;
+    if (oneUsers.last_sign_in_at == null){
+        cell.textContent = "Jamais connecté(e)";
+    }else {
+    cell.textContent = oneUsers.last_sign_in_at.substring(0, 10);
+    }
     row.appendChild(cell);
 
     cell = document.createElement("td");  // Ajoute un élément dans le tableau
@@ -119,3 +125,4 @@ async function getUsers() {
     let users = await retrieveUsers();
     buildTableRows(users, tableau); 
 }
+
