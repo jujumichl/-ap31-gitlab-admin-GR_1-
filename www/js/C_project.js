@@ -16,8 +16,6 @@ function initApp() {
     btnFiltrer.addEventListener('change', filtrer);
     const btnAscDesc = document.getElementById("btnAscDesc");
     btnAscDesc.addEventListener('change', sort);
-
-    /////////////////////////////////////////////////////////////////////////3 écouteurs
     const btnvisibility = document.getElementById("valider");
     btnvisibility.addEventListener('click', visibilityAll);
 
@@ -252,11 +250,9 @@ async function visibility(evt, baseUrl, id, value){
         result : ${JSON.stringify(resultArray)}
         Etat : ${etat}`
     );
-    /* if (String(statusCode).match(/^2[0-9]{2}$/)){
-        msgError = document.createElement("h1")
-        msgError.textContent = "Error" + statusCode + etat;
-        body.append(msgError);
-    } */
+    if (statusCode > 299 || statusCode < 200){
+        alert("Erreur" + statusCode + " " + etat)
+    }
     return resultArray;
 }
 
