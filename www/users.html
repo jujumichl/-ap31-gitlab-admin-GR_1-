@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico">
     <title>VHBSIO - Panneau d'administration de gitlab</title>
-    <script src=""></script>
+    <script src="./js/C_user.js" defer></script>
+    <script src="./js/api.js" defer></script>
+    <script src="./js/.config.js"></script>
 </head>
 
 <body>
@@ -63,7 +65,7 @@
             </h2>
             <form id="frmProjects" class="row row-cols-auto g-3 mb-3" action="#">
                 <fieldset class="col">
-                    <button class="btn btn-primary me-auto" id="btnGetUsers">Charger utilisateurs </button>
+                    <input type="button" class="btn btn-primary me-auto" id="btnGetUsers" value="Charger utilisateurs">
                 </fieldset>
                 <div class="d-md-flex justify-content-md-end ">
                     <input type="number" class="form-control" style="height: 40px;"
@@ -83,6 +85,9 @@
                         <th class="">Id</th>
                         <th class="">Nom</th>
                         <th class="">Date création</th>
+                        <th class="">Date de connexion</th>
+                        <th class="">État</th>
+                        <th class="">Nombre limite de projets</th>
                     </tr>
                 </thead>
                 <tbody id="bodyUsers">
@@ -92,7 +97,6 @@
                         <td>iilieva / Coding Test</td>
                         <td>2021-04-15T15:44:41.920Z</td>
                     </tr>
-
                 </tbody>
             </table>
             <nav aria-label="pageNav">

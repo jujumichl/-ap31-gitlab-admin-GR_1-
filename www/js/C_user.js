@@ -3,9 +3,9 @@ window.addEventListener("load", initApp);
 * Définit tous les écouteurs d'événement
 */
 function initApp() {
-    const slider = document.getElementById("slider");
-    slider.addEventListener("change", getValue);
-    slider.value = 20;
+    //const slider = document.getElementById("slider");
+    //slider.addEventListener("change", getValue);
+    //slider.value = 20;
     let btnGetUsers = document.getElementById('btnGetUsers');
     btnGetUsers.addEventListener('click', getUsers);
 }
@@ -21,7 +21,7 @@ function getValue(){
  *  
  */
 function eraseHTMLTab(tab) {
-    let ligneTab = tab.querySelector("tbody").querySelectorAll("tr");
+    let ligneTab = tab.getElementsByTagName("tr");
     for (let i = ligneTab.length-1; i >= 0; i--) {
         let rowToDelete = ligneTab[i];
         rowToDelete.remove();
@@ -34,15 +34,15 @@ function eraseHTMLTab(tab) {
  */
 async function retrieveUsers() {    
     // construction de l'URL complète
-    const URL = getAPIBaseUrl;
-    let URLFinal = URL + '/user'
+    const URL = getAPIBaseUrl();
+    let URLFinal = URL + '/users?order_by=username&sort=asc'
     // envoi asynchrone de la requête http avec GET comme méthode par défaut
     // avec attente d'obtention du résultat
     let myHeaders = new Headers();
     myHeaders.append("Accept", "application/json");
-    myHeaders.append("PRIVATE-TOKEN", getAccessToken)
+    myHeaders.append("PRIVATE-TOKEN", getAccessToken())
     let setting = {method: "GET", headers: myHeaders};
-    let response = await fetch(URL, setting);
+    let response = await fetch(URLFinal, setting);
     // récupération du corps de la réponse dans un objet JSON
     let resultArray = await response.json();
     // récupération du code statut de la réponse
@@ -69,12 +69,28 @@ function createTableRow (oneUsers) {
     row.appendChild(cell); // Ajoute les informations dans la nouvelle ligne du tableau 
 
     cell = document.createElement("td");  // Ajoute un élément dans le tableau
+    cell.textContent = oneUsers.id; // Récupère le nom du users 
+    row.appendChild(cell); // Ajoute dans la ligne le contenue de l'objet cell
+    
+    cell = document.createElement("td");  // Ajoute un élément dans le tableau
     cell.textContent = oneUsers.name; // Récupère le nom du users 
     row.appendChild(cell); // Ajoute dans la ligne le contenue de l'objet cell
 
     cell = document.createElement("td");  // Ajoute un élément dans le tableau
     cell.textContent = oneUsers.created_at.substring(0, 10);
     row.appendChild(cell); // Ajoute les informations dans la nouvelle ligne du tableau 
+
+    cell = document.createElement("td");  // Ajoute un élément dans le tableau
+    cell.textContent = oneUsers.last_sign_in_at;
+    row.appendChild(cell);
+
+    cell = document.createElement("td");  // Ajoute un élément dans le tableau
+    cell.textContent = oneUsers.state;
+    row.appendChild(cell);
+
+    cell = document.createElement("td");  // Ajoute un élément dans le tableau
+    cell.textContent = oneUsers.projects_limit;
+    row.appendChild(cell);
 
     return row; // Renvoie les informations de la nouvelle ligne du tableau
 }
@@ -85,19 +101,21 @@ function createTableRow (oneUsers) {
  * Chaque users du tableau usersArray présente les propriétés provenant 
  * de la récupération des données au format JSON.
  * @param {array} usersArray JSON
- * @param {HTMLTableElement} HTMLTable 
+ * @param {HTMLTableBodyElement} HTMLTableBody 
  */
-function buildTableRows (usersArray, HTMLTable){
-    let body = HTMLTable.querySelector('tbody');
+function buildTableRows (usersArray, HTMLTableBody){
     for(i=0; i<usersArray.length; i++){
         let myNewRow = createTableRow(usersArray[i]);
-        body.appendChild(myNewRow);
+        HTMLTableBody.appendChild(myNewRow);
     }
 }
-
+/**
+ * Fonction générale permettant la récupération de tous les users 
+ * en passant par l'API Gitlab
+ */
 async function getUsers() {
     let tableau = document.getElementById("bodyUsers");
-    eraseHTMLTab(tableau);
-    let users = retrieveUsers();
-    buildTableRows(await users, tableau);
+    eraseHTMLTab(tableau); // Efface les informations du tableau existant de la page 
+    let users = await retrieveUsers();
+    buildTableRows(users, tableau); 
 }
