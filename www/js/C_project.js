@@ -245,11 +245,18 @@ async function visibility(evt, baseUrl, id, value){
     let headers = await response.headers;
     // récupération du code statut de la réponse
     let statusCode = response.status;
+    let etat = response.statusText;
     console.log(
         `Code statut : ${statusCode} 
         Content-Type : ${headers.get("Content-Type")}
-        result : ${JSON.stringify(resultArray)}`
+        result : ${JSON.stringify(resultArray)}
+        Etat : ${etat}`
     );
+    /* if (String(statusCode).match(/^2[0-9]{2}$/)){
+        msgError = document.createElement("h1")
+        msgError.textContent = "Error" + statusCode + etat;
+        body.append(msgError);
+    } */
     return resultArray;
 }
 
