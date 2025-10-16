@@ -23,15 +23,6 @@
 ## Règles de codage
 1.	Utiliser l'opérateur de comparaison d'égalité stricte === et non ==.
 2.	Le code javascript se trouvera uniquement dans des fichiers scripts .js et en aucune façon dans les balises HTML. En particulier, l’affectation des gestionnaires d’événements se fera uniquement via la méthode `addEventListener` appliquée à l’objet déclencheur de l’événement. 
-3.	Le code javascript sera réparti sur au minimum 4 modules :
-
-	1. Le module `projectsController` ayant en charge le traitement des demandes utilisateur, les gestionnaires d'événements étant maintenus dans le module contrôleur
-
-	2. Le module `projectsViews` ayant en charge la modification des éléments de la page
-
-	3. Le module `projectsData` ayant en charge l'accès à la source de données
-
-	4. Le module `parameters` ayant en charge la consultation et/ou la mise à jour des données de configuration vis-à-vis de l'interrogation de l'API-REST Gitlab.
 
 ## Règles de documentation
 1. Chaque fonction sera précédée de sa documentation au format `JSDoc`.
