@@ -11,6 +11,8 @@ function initApp() {
     btnGetUsers.addEventListener('click', getUsers);
     let activeDesactive = document.getElementById('activeDesactive');
     activeDesactive.addEventListener('click', activerDesactiver)
+    let buttonAddon2 = document.getElementById('button-addon2');
+    buttonAddon2.addEventListener('click', changerLimite);
 }
 
 function getValue(){
@@ -154,6 +156,34 @@ async function activerDesactiver() {
             {
                 await changerEtatUsers(idUser, "activate");
             }
+        }
+    }
+}
+
+async function changerNombreLimite(idUser, nouvelleLimite) {
+    const URL = getAPIBaseURL();
+    let URLFinal = URL + `/users/${idUser}?projects_limit=${nouvelleLimite}`;
+    let myHeaders = new Headers();
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("PRIVATE-TOKEN", getAccessToken());
+    let setting = {method: "PUT", headers: myHeaders};
+    let response = await fetch(URLFinal, setting);
+    let resultArray = await response.json();
+    let statusCode = response.status;
+    console.log(`Code statut : ${statusCode} - Corps de réponse : ${JSON.stringify(resultArray)}`);
+    return resultArray;
+}
+
+async function changerLimite() {
+    let nouvelleLimite = document.getElementById("limiteProjets").value;
+    let tableauUser = document.getElementById("bodyUsers").getElementsByTagName("tr");
+    for (let i = 0; i < tableauUser.length; i++) {
+        let row = tableauUser[i];
+        let checkBox = row.getElementsByTagName("td")[0].getElementsByTagName("input")[0];
+        if (checkBox.checked) {
+            let idUser = checkBox.value;
+            console.log(idUser);
+            await changerNombreLimite(idUser, nouvelleLimite);
         }
     }
 }
