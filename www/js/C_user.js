@@ -1,4 +1,5 @@
 window.addEventListener("load", initApp);
+let users;
 /**
 * Définit tous les écouteurs d'événement
 */
@@ -9,7 +10,7 @@ function initApp() {
     let btnGetUsers = document.getElementById('btnGetUsers');
     btnGetUsers.addEventListener('click', getUsers);
     let activeDesactive = document.getElementById('activeDesactive');
-    activeDesactive.addEventListener('click', sort)
+    activeDesactive.addEventListener('click', activerDesactiver)
 }
 
 function getValue(){
@@ -122,7 +123,37 @@ function buildTableRows (usersArray, HTMLTableBody){
 async function getUsers() {
     let tableau = document.getElementById("bodyUsers");
     eraseHTMLTab(tableau); // Efface les informations du tableau existant de la page 
-    let users = await retrieveUsers();
+    users = await retrieveUsers();
     buildTableRows(users, tableau); 
 }
 
+async function changerEtatUsers(idUser, $etatDonnee) {
+    const URL = getAPIBaseURL();
+    let URLFinal = URL + `/users/${idUser}/${ $etatDonnee }`;
+    let myHeaders = new Headers();
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("PRIVATE-TOKEN", getAccessToken());
+    let setting = {method: "POST", headers: myHeaders};
+    let response = await fetch(URLFinal, setting);
+    let resultArray = await response.json();
+    let statusCode = response.status;
+    console.log(`Code statut : ${statusCode} - Corps de réponse : ${JSON.stringify(resultArray)}`);
+    return resultArray;
+}
+
+async function activerDesactiver() {
+    let tableauUser = document.getElementById("bodyUsers").getElementsByTagName("tr");
+    for (let i = 0; i < tableauUser.length; i++) {
+        let row = tableauUser[i];
+        let checkBox = row.getElementsByTagName("td")[0].getElementsByTagName("input")[0];
+        if (checkBox.checked) {
+            let idUser = checkBox.value;
+            if (row.getElementsByTagName("td")[5].textContent == "active"){
+                await changerEtatUsers(idUser, "deactivate");
+            } else
+            {
+                await changerEtatUsers(idUser, "activate");
+            }
+        }
+    }
+}
