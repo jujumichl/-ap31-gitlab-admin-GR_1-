@@ -9,8 +9,8 @@
     <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico">
     <title>VHBSIO - Panneau d'administration de gitlab</title>.
     <script src="./js/C_project.js" defer></script>
-    <script src="js/api.js" defer></script>
-    <script src="js/.config.js" defer></script>
+    <script src="./js/api.js" defer></script>
+    <script src="./js/.config.js" defer></script>
 </head>
 
 <body>
@@ -40,18 +40,19 @@
                             title="Gérer par lots les projets de la plateforme">
                             <span class="bi bi-kanban"></span> Projets
                         </a>
-                        </li>
-                        <li class="nav-item">              
-                        <a href="./users.html" class="nav-link" title="Gérer par lots les utilisateurs de la plateforme">
+                    </li>
+                    <li class="nav-item">
+                        <a href="./users.html" class="nav-link"
+                            title="Gérer par lots les utilisateurs de la plateforme">
                             <span class="bi bi-person"></span> Utilisateurs
                         </a>
-                        </li>
-                        <li class="nav-item">
+                    </li>
+                    <li class="nav-item">
                         <a href="./group.html" class="nav-link" title="Gérer par lots les groupes de la plateforme">
                             <span class="bi bi-people"></span> Groupes
                         </a>
-                        </li>
-                        <li class="nav-item">
+                    </li>
+                    <li class="nav-item">
                         <a href="param.html" class="nav-link" title="Paramétrer l'accès à la plateforme">
                             <span class="bi bi-gear"></span> Paramètres
                         </a>
@@ -67,10 +68,21 @@
             <form id="frmProjects" class="row row-cols-auto g-3 mb-3" action="#">
                 <fieldset class="col me-auto">
                     <input type="button" class="btn btn-primary" value="Charger projets" id="btnGetProjects">
-                    <input type="button" class="btn btn-primary" value="Supprimer" id="btnDeleteProjects">
-                    <div class="form-check form-switch">
-                        <label class="form-check-label" for="visibility">Privé/Publique</label>
-                        <input class="form-check-input" type="checkbox" role="switch" id="visibility">
+                    <input type="button" class="btn btn-primary" value="Supprimer" id="btnDeleteProjects"> </br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="visibility" id="public" value="1">
+                        <label class="form-check-label" for="public">Public</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="visibility" id="Internal" value="2">
+                        <label class="form-check-label" for="Internal">Internal</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="visibility" id="Private" value="3">
+                        <label class="form-check-label" for="private">Private</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <button class="btn btn-success" type="submit" id="valider">Valider</button>
                     </div>
                 </fieldset>
                 <div class="col order-last">
@@ -78,7 +90,8 @@
                         <label class="form-check-label" for="btnAscDesc">desc/asc</label>
                         <input class="form-check-input" type="checkbox" role="switch" id="btnAscDesc">
                     </div>
-                    <select id="btnFiltrer" class="form-select form-select mb-3 align-items-end" aria-label=".form-select-lg">
+                    <select id="btnFiltrer" class="form-select form-select mb-3 align-items-end"
+                        aria-label=".form-select-lg">
                         <option selected="" hidden>Filtrer</option>
                         <option value="created_at">Date de création</option>
                         <option value="id">Identifiant</option>
@@ -96,11 +109,8 @@
                         <th class="">Owner</th>
                         <th class="">Nom</th>
                         <th class="">Date création</th>
-                        <th class="">Date de connexion</th>
-                        <th class="">État</th>
-                        <th class="">Nombre limite de projets</th>
-
-                        <th>&nbsp;</th>
+                        <th class="">visibilité</th>
+                        <th class="">URL du projet</th>
                     </tr>
                 </thead>
                 <tbody id="bodyProjects">
