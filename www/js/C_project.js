@@ -268,7 +268,7 @@ async function visibilityAll(evt){
     for (element of all){
         await visibility(evt, getAPIBaseURL(), String(element), String(visib));
     }
-    getProjects(evt)
+    getProjects(evt);
 }
 
 /**
@@ -333,6 +333,7 @@ async function deleteProject(baseUrl, id){
         result : ${JSON.stringify(resultArray)}
         Etat : ${etat}`
     );
+    getProjects(evt);
 }
 
 
