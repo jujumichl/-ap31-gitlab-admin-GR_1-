@@ -129,6 +129,12 @@ async function getUsers() {
     buildTableRows(users, tableau); 
 }
 
+/**
+ * Fonction permettant de changer l'état (actif ou inactif) d'un utilisateur
+ * @param {int} idUser Identifiant de l'utilisateur
+ * @param {string} $etatDonnee "activate" ou "deactivate"
+ * @returns 
+ */
 async function changerEtatUsers(idUser, $etatDonnee) {
     const URL = getAPIBaseURL();
     let URLFinal = URL + `/users/${idUser}/${ $etatDonnee }`;
@@ -140,7 +146,9 @@ async function changerEtatUsers(idUser, $etatDonnee) {
     let resultArray = await response.json();
     return resultArray;
 }
-
+/**
+ * Fonction permettant d'activer ou de désactiver un utilisateur sélectionné
+ */
 async function activerDesactiver() {
     let tableauUser = document.getElementById("bodyUsers").getElementsByTagName("tr");
     for (let i = 0; i < tableauUser.length; i++) {
@@ -160,6 +168,12 @@ async function activerDesactiver() {
     }
 }
 
+/**
+ * Fonction permettant de changer la limite de projets pour un utilisateur sélectionné
+ * @param {int} idUser Identifiant de(s) l'utilisateur(s)
+ * @param {int} nouvelleLimite Nouvelle limite de projets
+ * @returns 
+ */
 async function changerNombreLimite(idUser, nouvelleLimite) {
     const URL = getAPIBaseURL();
     let URLFinal = URL + `/users/${idUser}?projects_limit=${nouvelleLimite}`;
@@ -174,7 +188,9 @@ async function changerNombreLimite(idUser, nouvelleLimite) {
     return resultArray;
 
 }
-
+/**
+ * Fonction permettant de changer la limite de projets pour un utilisateur sélectionné
+ */
 async function changerLimite() {
     let nouvelleLimite = document.getElementById("limiteProjets").value;
     let tableauUser = document.getElementById("bodyUsers").getElementsByTagName("tr");
