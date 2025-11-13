@@ -78,7 +78,11 @@ function demandeConfirmation(evt) {
             evt.preventDefault();
         }
         else {
-            eraseHTMLTab(document.getElementById("tbProjects"));
+            eraseHTMLTab(document.getElementById("tabProjects"));
+            console.log("Suppression des projets : \n" + typeof(list));
+            for (const id of all) {
+                deleteProject(getAPIBaseURL(), id);
+            }
             alert("Les projets ont bien été supprimer.");
         }
     }
@@ -166,9 +170,10 @@ async function retrieveProjects (baseUrl, filtre, asc) {
     // envoi asynchrone de la requête http avec GET comme méthode par défaut
     // avec attente d'obtention du résultat
     let response = await fetch(finalUrl, settings);
-
+    
     // récupération du corps de la réponse dans un objet JSON
     let resultArray = await response.json();
+    let activeProjects = resultArray.filter(project => project.marked_for_deletion_on == null);
     let headers = await response.headers;
     // récupération du code statut de la réponse
     let statusCode = response.status;
@@ -182,7 +187,7 @@ async function retrieveProjects (baseUrl, filtre, asc) {
         page actuel : ${JSON.stringify(headers.get("x-page"))}
         nb elem total : ${JSON.stringify(headers.get("x-total"))}`
     );
-    return resultArray;
+    return activeProjects;
 }
 
 
@@ -294,6 +299,40 @@ async function getProjects(evt, filtre = document.getElementById("btnFiltrer").v
     else{
         buildTableRows( await retrieveProjects(getAPIBaseURL(), filtre, asc), htmlTable);
     }
+}
+
+/**
+ * Permet de supprimer un projet (Le projet ne sera pas 
+ * supprimé définitivement tout de suite, 
+ * il y a un delai de 30 jours avant la suppression définitive)
+ * @param {String} baseUrl url de base de l'API
+ * @param {String} id of project to delete 
+ */
+async function deleteProject(baseUrl, id){
+    const finalUrl = baseUrl + "/projects/" + id;
+    console.log(finalUrl);
+    //Construction de l'objet Headers
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("PRIVATE-TOKEN", getAccessToken());
+    // construction de l'objet settings précisant méthode et champs d'entête
+    let settings = { method: "DELETE", headers: myHeaders};
+    // envoi asynchrone de la requête http avec GET comme méthode par défaut
+    // avec attente d'obtention du résultat
+    let response = await fetch(finalUrl, settings);
+
+    // récupération du corps de la réponse dans un objet JSON
+    let resultArray = await response.json();
+    let headers = await response.headers;
+    // récupération du code statut de la réponse
+    let statusCode = response.status;
+    let etat = response.statusText;
+    console.log(
+        `Code statut : ${statusCode} 
+        Content-Type : ${headers.get("Content-Type")}
+        result : ${JSON.stringify(resultArray)}
+        Etat : ${etat}`
+    );
 }
 
 
