@@ -138,8 +138,6 @@ async function changerEtatUsers(idUser, $etatDonnee) {
     let setting = {method: "POST", headers: myHeaders};
     let response = await fetch(URLFinal, setting);
     let resultArray = await response.json();
-    let statusCode = response.status;
-    console.log(`Code statut : ${statusCode} - Corps de réponse : ${JSON.stringify(resultArray)}`);
     return resultArray;
 }
 
@@ -152,9 +150,11 @@ async function activerDesactiver() {
             let idUser = checkBox.value;
             if (row.getElementsByTagName("td")[5].textContent == "active"){
                 await changerEtatUsers(idUser, "deactivate");
+                await getUsers();
             } else
             {
                 await changerEtatUsers(idUser, "activate");
+                await getUsers();
             }
         }
     }
@@ -172,6 +172,7 @@ async function changerNombreLimite(idUser, nouvelleLimite) {
     let statusCode = response.status;
     console.log(`Code statut : ${statusCode} - Corps de réponse : ${JSON.stringify(resultArray)}`);
     return resultArray;
+
 }
 
 async function changerLimite() {
@@ -184,6 +185,7 @@ async function changerLimite() {
             let idUser = checkBox.value;
             console.log(idUser);
             await changerNombreLimite(idUser, nouvelleLimite);
+            await getUsers();
         }
     }
 }
