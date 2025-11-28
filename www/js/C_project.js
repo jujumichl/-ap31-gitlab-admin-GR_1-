@@ -4,8 +4,7 @@ window.addEventListener("load", initApp);
 */
 function initApp() {
     const slider = document.getElementById("slider");
-    slider.addEventListener('change', getValue);
-    slider.value = 20;
+    slider.addEventListener('change', pagination);
     const buttonAllChk = document.getElementById("btnCocher");
     buttonAllChk.addEventListener('change', check);
     const btnSupprimer = document.getElementById("btnDeleteProjects");
@@ -21,10 +20,13 @@ function initApp() {
 
 }
 
-function getValue(){
+async function pagination(evt, baseUrl){
     const number = document.getElementById("numberPage");
-    number.textContent = this.value; 
+    number.textContent = this.value;
+    await retrieveProjects(getAPIBaseURL())///////////////////////////////////////////////////A VOIR POUR RECUPERER LE FILTRE + LORDRE 1 ADD PAG
+
 }
+
 
 /**
  * permet de cocher/décocher les cases
@@ -156,8 +158,8 @@ function createTableRow(oneProject) {
  * Retrouve tous les projets
  * @returns retourne une liste de projet
  */
-async function retrieveProjects (baseUrl, filtre, asc) {
-    const finalUrl = baseUrl + "/projects?order_by=" + filtre + "&sort=" + asc;
+async function retrieveProjects (baseUrl, filtre, asc, pagination = 20) {
+    const finalUrl = baseUrl + "/projects?pagination=keyset&per_page=" + pagination + "&order_by=" + filtre + "&sort=" + asc;
     // ajout du ou des champs d'entête dans la collection de type Headers
     let myHeaders = new Headers();
 
@@ -222,7 +224,7 @@ async function visibility(evt, baseUrl, id, value){
     // ajout du ou des champs d'entête dans la collection de type Headers
     let myHeaders = new Headers();
 
-    console.log(finalUrl);
+    // console.log(finalUrl);
 
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("PRIVATE-TOKEN", getAccessToken());
@@ -235,7 +237,7 @@ async function visibility(evt, baseUrl, id, value){
     else{
         visib = "private";
     }
-    console.log(visib);
+    // console.log(visib);
     let data =  {visibility : visib};
     // construction de l'objet settings précisant méthode et champs d'entête
     let settings = { method: "PUT", headers: myHeaders, body: JSON.stringify(data)};
