@@ -52,7 +52,7 @@ async function retrieveUsers() {
     let resultArray = await response.json();
     // récupération du code statut de la réponse
     let statusCode = response.status;
-    console.log(`Code statut : ${statusCode} - Corps de réponse : ${JSON.stringify(resultArray)}`);
+    // console.log(`Code statut : ${statusCode} - Corps de réponse : ${JSON.stringify(resultArray)}`);
     return resultArray;
 }
 
@@ -158,14 +158,13 @@ async function activerDesactiver() {
             let idUser = checkBox.value;
             if (row.getElementsByTagName("td")[5].textContent == "active"){
                 await changerEtatUsers(idUser, "deactivate");
-                await getUsers();
             } else
             {
                 await changerEtatUsers(idUser, "activate");
-                await getUsers();
             }
         }
     }
+    await getUsers();
 }
 
 /**
@@ -189,19 +188,20 @@ async function changerNombreLimite(idUser, nouvelleLimite) {
 
 }
 /**
- * Fonction permettant de changer la limite de projets pour un utilisateur sélectionné
+ * Fonction permettant de changer la limite de projets pour un ou plusieurs utilisateurs sélectionnés
  */
 async function changerLimite() {
     let nouvelleLimite = document.getElementById("limiteProjets").value;
     let tableauUser = document.getElementById("bodyUsers").getElementsByTagName("tr");
+    console.log(tableauUser);
     for (let i = 0; i < tableauUser.length; i++) {
         let row = tableauUser[i];
         let checkBox = row.getElementsByTagName("td")[0].getElementsByTagName("input")[0];
+
         if (checkBox.checked) {
             let idUser = checkBox.value;
-            console.log(idUser);
             await changerNombreLimite(idUser, nouvelleLimite);
-            await getUsers();
         }
     }
+    await getUsers();
 }
