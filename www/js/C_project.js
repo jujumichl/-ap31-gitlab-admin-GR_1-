@@ -73,7 +73,7 @@ function demandeConfirmation(evt) {
     let list = "";
     all.forEach((element) => list += element + "\n")
     if (all != "") {
-        ok = confirm("Souhaitez-vous supprimer les identifiants ci dessous ? \n" + list);
+        ok = confirm("Souhaitez-vous supprimer les projets ci dessous ? \n" + list);
         if (!ok) {
             evt.preventDefault();
         }
