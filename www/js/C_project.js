@@ -3,8 +3,6 @@ window.addEventListener("load", initApp);
 * Définit tous les écouteurs d'événement
 */
 function initApp() {
-    const slider = document.getElementById("slider");
-    slider.addEventListener('change', pagination);
     const buttonAllChk = document.getElementById("btnCocher");
     buttonAllChk.addEventListener('change', check);
     const btnSupprimer = document.getElementById("btnDeleteProjects");
@@ -17,14 +15,19 @@ function initApp() {
     btnAscDesc.addEventListener('change', sort);
     const btnvisibility = document.getElementById("valider");
     btnvisibility.addEventListener('click', visibilityAll);
+    const btnValiderNbPage = document.getElementById("btnValiderPages")
+    btnValiderNbPage.addEventListener('click', pagination());
 
 }
 
-async function pagination(evt, baseUrl){
-    const number = document.getElementById("numberPage");
-    number.textContent = this.value;
-    await retrieveProjects(getAPIBaseURL())///////////////////////////////////////////////////A VOIR POUR RECUPERER LE FILTRE + LORDRE 1 ADD PAG
-
+async function pagination(){
+    if (document.getElementById('nbPages').value == ""){
+        let nbPage = 20;
+    }
+    else {
+        let nbPage = document.getElementById('nbPages').value;
+    }
+    await retrieveProjects(getAPIBaseURL(), filtrer(), sort(), nbPage);
 }
 
 
@@ -159,7 +162,7 @@ function createTableRow(oneProject) {
  * @returns retourne une liste de projet
  */
 async function retrieveProjects (baseUrl, filtre, asc, pagination = 20) {
-    const finalUrl = baseUrl + "/projects?pagination=keyset&per_page=" + pagination + "&order_by=" + filtre + "&sort=" + asc;
+    const finalUrl = baseUrl + "/projects?per_page=" + pagination + "&order_by=" + filtre + "&sort=" + asc;
     // ajout du ou des champs d'entête dans la collection de type Headers
     let myHeaders = new Headers();
 
@@ -179,6 +182,8 @@ async function retrieveProjects (baseUrl, filtre, asc, pagination = 20) {
     let headers = await response.headers;
     // récupération du code statut de la réponse
     let statusCode = response.status;
+    // ajout du nombre d'élement total
+    document.getElementById("totalPages").textContent = JSON.stringify(headers.get("x-total")).substring(1,3);
     console.log(
         `Code statut : ${statusCode} 
         nb page : ${JSON.stringify(headers.get("x-total-pages"))} 

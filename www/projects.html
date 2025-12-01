@@ -90,6 +90,13 @@
                         <label class="form-check-label" for="btnAscDesc">desc/asc</label>
                         <input class="form-check-input" type="checkbox" role="switch" id="btnAscDesc">
                     </div>
+                    <div class="input-group mb-3">
+                        <input type="number" class="form-control" aria-label="Nombre de pages (min: 20 & max: 100)" max="100" min="20" id="nbPages">
+                        <span class="input-group-text">/</span>
+                        <span class="input-group-text" id="totalPages"></span>
+                        <button class="btn btn-success" type="submit" id="btnValiderPages">Valider</button>
+                    </div>
+
                     <select id="btnFiltrer" class="form-select form-select mb-3 align-items-end"
                         aria-label=".form-select-lg">
                         <option selected="" hidden>Filtrer</option>
@@ -128,8 +135,6 @@
             </table>
         </main>
         <!-- Pied de page -->
-        <label for="slider" class="form-label">Nombre de page affichée a l'écran : <span id="numberPage"></span></label>
-        <input type="range" class="form-range" id="slider" min=20>
         <footer class="container text-center">
             <p>Panneau développé avec Boostrap et en langage JavaScript</p>
         </footer>
