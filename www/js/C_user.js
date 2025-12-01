@@ -1,4 +1,5 @@
 window.addEventListener("load", initApp);
+let users;
 /**
 * Définit tous les écouteurs d'événement
 */
@@ -8,6 +9,10 @@ function initApp() {
     //slider.value = 20;
     let btnGetUsers = document.getElementById('btnGetUsers');
     btnGetUsers.addEventListener('click', getUsers);
+    let activeDesactive = document.getElementById('activeDesactive');
+    activeDesactive.addEventListener('click', activerDesactiver)
+    let buttonAddon2 = document.getElementById('button-addon2');
+    buttonAddon2.addEventListener('click', changerLimite);
 }
 
 function getValue(){
@@ -34,7 +39,7 @@ function eraseHTMLTab(tab) {
  */
 async function retrieveUsers() {    
     // construction de l'URL complète
-    const URL = getAPIBaseUrl();
+    const URL = getAPIBaseURL();
     let URLFinal = URL + '/users?order_by=username&sort=asc'
     // envoi asynchrone de la requête http avec GET comme méthode par défaut
     // avec attente d'obtention du résultat
@@ -47,7 +52,7 @@ async function retrieveUsers() {
     let resultArray = await response.json();
     // récupération du code statut de la réponse
     let statusCode = response.status;
-    console.log(`Code statut : ${statusCode} - Corps de réponse : ${JSON.stringify(resultArray)}`);
+    // console.log(`Code statut : ${statusCode} - Corps de réponse : ${JSON.stringify(resultArray)}`);
     return resultArray;
 }
 
@@ -81,7 +86,11 @@ function createTableRow (oneUsers) {
     row.appendChild(cell); // Ajoute les informations dans la nouvelle ligne du tableau 
 
     cell = document.createElement("td");  // Ajoute un élément dans le tableau
-    cell.textContent = oneUsers.last_sign_in_at;
+    if (oneUsers.last_sign_in_at == null){
+        cell.textContent = "Jamais connecté(e)";
+    }else {
+    cell.textContent = oneUsers.last_sign_in_at.substring(0, 10);
+    }
     row.appendChild(cell);
 
     cell = document.createElement("td");  // Ajoute un élément dans le tableau
@@ -116,6 +125,83 @@ function buildTableRows (usersArray, HTMLTableBody){
 async function getUsers() {
     let tableau = document.getElementById("bodyUsers");
     eraseHTMLTab(tableau); // Efface les informations du tableau existant de la page 
-    let users = await retrieveUsers();
+    users = await retrieveUsers();
     buildTableRows(users, tableau); 
+}
+
+/**
+ * Fonction permettant de changer l'état (actif ou inactif) d'un utilisateur
+ * @param {int} idUser Identifiant de l'utilisateur
+ * @param {string} $etatDonnee "activate" ou "deactivate"
+ * @returns 
+ */
+async function changerEtatUsers(idUser, $etatDonnee) {
+    const URL = getAPIBaseURL();
+    let URLFinal = URL + `/users/${idUser}/${ $etatDonnee }`;
+    let myHeaders = new Headers();
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("PRIVATE-TOKEN", getAccessToken());
+    let setting = {method: "POST", headers: myHeaders};
+    let response = await fetch(URLFinal, setting);
+    let resultArray = await response.json();
+    return resultArray;
+}
+/**
+ * Fonction permettant d'activer ou de désactiver un utilisateur sélectionné
+ */
+async function activerDesactiver() {
+    let tableauUser = document.getElementById("bodyUsers").getElementsByTagName("tr");
+    for (let i = 0; i < tableauUser.length; i++) {
+        let row = tableauUser[i];
+        let checkBox = row.getElementsByTagName("td")[0].getElementsByTagName("input")[0];
+        if (checkBox.checked) {
+            let idUser = checkBox.value;
+            if (row.getElementsByTagName("td")[5].textContent == "active"){
+                await changerEtatUsers(idUser, "deactivate");
+            } else
+            {
+                await changerEtatUsers(idUser, "activate");
+            }
+        }
+    }
+    await getUsers();
+}
+
+/**
+ * Fonction permettant de changer la limite de projets pour un utilisateur sélectionné
+ * @param {int} idUser Identifiant de(s) l'utilisateur(s)
+ * @param {int} nouvelleLimite Nouvelle limite de projets
+ * @returns 
+ */
+async function changerNombreLimite(idUser, nouvelleLimite) {
+    const URL = getAPIBaseURL();
+    let URLFinal = URL + `/users/${idUser}?projects_limit=${nouvelleLimite}`;
+    let myHeaders = new Headers();
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("PRIVATE-TOKEN", getAccessToken());
+    let setting = {method: "PUT", headers: myHeaders};
+    let response = await fetch(URLFinal, setting);
+    let resultArray = await response.json();
+    let statusCode = response.status;
+    console.log(`Code statut : ${statusCode} - Corps de réponse : ${JSON.stringify(resultArray)}`);
+    return resultArray;
+
+}
+/**
+ * Fonction permettant de changer la limite de projets pour un ou plusieurs utilisateurs sélectionnés
+ */
+async function changerLimite() {
+    let nouvelleLimite = document.getElementById("limiteProjets").value;
+    let tableauUser = document.getElementById("bodyUsers").getElementsByTagName("tr");
+    console.log(tableauUser);
+    for (let i = 0; i < tableauUser.length; i++) {
+        let row = tableauUser[i];
+        let checkBox = row.getElementsByTagName("td")[0].getElementsByTagName("input")[0];
+
+        if (checkBox.checked) {
+            let idUser = checkBox.value;
+            await changerNombreLimite(idUser, nouvelleLimite);
+        }
+    }
+    await getUsers();
 }
