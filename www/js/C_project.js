@@ -16,6 +16,8 @@ function initApp() {
     btnFiltrer.addEventListener('change', filtrer);
     const btnAscDesc = document.getElementById("btnAscDesc");
     btnAscDesc.addEventListener('change', sort);
+    const btnvisibility = document.getElementById("valider");
+    btnvisibility.addEventListener('click', visibilityAll);
 
 }
 
@@ -66,7 +68,7 @@ function ischecked() {
  * @param {Event} evt 
  */
 function demandeConfirmation(evt) {
-    var ok;
+    let ok;
     let all = ischecked();
     let list = "";
     all.forEach((element) => list += element + "\n")
@@ -76,7 +78,11 @@ function demandeConfirmation(evt) {
             evt.preventDefault();
         }
         else {
-            eraseHTMLTab(document.getElementById("tbProjects"));
+            eraseHTMLTab(document.getElementById("tabProjects"));
+            console.log("Suppression des projets : \n" + typeof(list));
+            for (const id of all) {
+                deleteProject(getAPIBaseURL(), id);
+            }
             alert("Les projets ont bien été supprimer.");
         }
     }
@@ -164,9 +170,10 @@ async function retrieveProjects (baseUrl, filtre, asc) {
     // envoi asynchrone de la requête http avec GET comme méthode par défaut
     // avec attente d'obtention du résultat
     let response = await fetch(finalUrl, settings);
-
+    
     // récupération du corps de la réponse dans un objet JSON
     let resultArray = await response.json();
+    let activeProjects = resultArray.filter(project => project.marked_for_deletion_on == null);
     let headers = await response.headers;
     // récupération du code statut de la réponse
     let statusCode = response.status;
@@ -180,7 +187,7 @@ async function retrieveProjects (baseUrl, filtre, asc) {
         page actuel : ${JSON.stringify(headers.get("x-page"))}
         nb elem total : ${JSON.stringify(headers.get("x-total"))}`
     );
-    return resultArray;
+    return activeProjects;
 }
 
 
@@ -205,6 +212,65 @@ async function sort(evt){
         await getProjects(evt, undefined, "desc");
     }
 }
+
+/**
+ * Permet de changer la visibilité d'un projet
+ */
+async function visibility(evt, baseUrl, id, value){
+    const finalUrl = baseUrl + "/projects/" + id;
+    let visib;
+    // ajout du ou des champs d'entête dans la collection de type Headers
+    let myHeaders = new Headers();
+
+    console.log(finalUrl);
+
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("PRIVATE-TOKEN", getAccessToken());
+    if (value == "1"){
+        visib = "public";
+    }
+    else if (value == "2"){
+        visib = "internal";
+    }
+    else{
+        visib = "private";
+    }
+    console.log(visib);
+    let data =  {visibility : visib};
+    // construction de l'objet settings précisant méthode et champs d'entête
+    let settings = { method: "PUT", headers: myHeaders, body: JSON.stringify(data)};
+    // envoi asynchrone de la requête http avec GET comme méthode par défaut
+    // avec attente d'obtention du résultat
+    let response = await fetch(finalUrl, settings);
+
+    // récupération du corps de la réponse dans un objet JSON
+    let resultArray = await response.json();
+    let headers = await response.headers;
+    // récupération du code statut de la réponse
+    let statusCode = response.status;
+    let etat = response.statusText;
+    console.log(
+        `Code statut : ${statusCode} 
+        Content-Type : ${headers.get("Content-Type")}
+        result : ${JSON.stringify(resultArray)}
+        Etat : ${etat}`
+    );
+    if (statusCode > 299 || statusCode < 200){
+        alert("Erreur" + statusCode + " " + etat)
+    }
+    return resultArray;
+}
+
+async function visibilityAll(evt){
+    evt.preventDefault();
+    let all = ischecked();
+    let visib = document.forms[0].elements["visibility"].value;
+    for (element of all){
+        await visibility(evt, getAPIBaseURL(), String(element), String(visib));
+    }
+    getProjects(evt);
+}
+
 /**
  * Construit les lignes du corps du tableau HTML htmlTable 
  * à partir du tableau des projets projectsArray 
@@ -233,6 +299,41 @@ async function getProjects(evt, filtre = document.getElementById("btnFiltrer").v
     else{
         buildTableRows( await retrieveProjects(getAPIBaseURL(), filtre, asc), htmlTable);
     }
+}
+
+/**
+ * Permet de supprimer un projet (Le projet ne sera pas 
+ * supprimé définitivement tout de suite, 
+ * il y a un delai de 30 jours avant la suppression définitive)
+ * @param {String} baseUrl url de base de l'API
+ * @param {String} id of project to delete 
+ */
+async function deleteProject(baseUrl, id){
+    const finalUrl = baseUrl + "/projects/" + id;
+    console.log(finalUrl);
+    //Construction de l'objet Headers
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("PRIVATE-TOKEN", getAccessToken());
+    // construction de l'objet settings précisant méthode et champs d'entête
+    let settings = { method: "DELETE", headers: myHeaders};
+    // envoi asynchrone de la requête http avec GET comme méthode par défaut
+    // avec attente d'obtention du résultat
+    let response = await fetch(finalUrl, settings);
+
+    // récupération du corps de la réponse dans un objet JSON
+    let resultArray = await response.json();
+    let headers = await response.headers;
+    // récupération du code statut de la réponse
+    let statusCode = response.status;
+    let etat = response.statusText;
+    console.log(
+        `Code statut : ${statusCode} 
+        Content-Type : ${headers.get("Content-Type")}
+        result : ${JSON.stringify(resultArray)}
+        Etat : ${etat}`
+    );
+    getProjects(evt);
 }
 
 
